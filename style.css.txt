@@ -1,0 +1,292 @@
+/* style.css - Calendário Luna Nulla */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --null-color: #2a9d8f;
+    --luna-color: #e76f51;
+    --gaia-color: #264653;
+    --vazio-color: #e9c46a;
+    --text-color: #f8f9fa;
+    --bg-color: #1a1a2e;
+    --card-bg: #16213e;
+    --border-color: #0f3460;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(42, 157, 143, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(231, 111, 81, 0.1) 0%, transparent 20%);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 20px;
+}
+
+.header {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, var(--gaia-color), var(--null-color));
+    border-radius: 20px;
+    margin-bottom: 20px;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.header h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    background: linear-gradient(45deg, var(--text-color), var(--vazio-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header h2 {
+    font-size: 1.5em;
+    color: var(--vazio-color);
+    font-weight: 300;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    color: var(--null-color);
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    border-bottom: 2px solid var(--null-color);
+    padding-bottom: 10px;
+}
+
+/* Relógio NULL */
+.null-clock {
+    grid-column: 1;
+    background: linear-gradient(135deg, var(--gaia-color), #1e3a5f);
+}
+
+.clock-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.main-time {
+    font-size: 4em;
+    font-family: 'Courier New', monospace;
+    color: var(--vazio-color);
+    text-shadow: 0 0 10px rgba(233, 196, 106, 0.3);
+}
+
+.null-unit {
+    font-size: 1.2em;
+    color: var(--luna-color);
+}
+
+.gaia-pulse {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--null-color), transparent);
+    animation: pulse 26s infinite linear;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border: 3px solid var(--null-color);
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0.7; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.7; }
+}
+
+/* Calendário NULL */
+.null-calendar {
+    grid-column: 2;
+    background: linear-gradient(135deg, #1e3a5f, var(--gaia-color));
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.moon-phase {
+    font-size: 2em;
+}
+
+.current-date {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.null-date {
+    font-size: 2.5em;
+    color: var(--vazio-color);
+}
+
+.earth-date {
+    color: #aaa;
+}
+
+/* Escalas NULL */
+.null-scales {
+    grid-column: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.scale-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.scale-value {
+    font-size: 1.5em;
+    color: var(--null-color);
+    margin-bottom: 5px;
+}
+
+/* Luas NULL */
+.null-moons {
+    grid-column: 2;
+}
+
+.moon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.moon-item {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.moon-item.active {
+    background: var(--null-color);
+    color: white;
+}
+
+.moon-item:hover {
+    transform: scale(1.05);
+}
+
+/* Progresso */
+.progress-section {
+    grid-column: 1 / -1;
+}
+
+.progress-container {
+    margin-top: 15px;
+}
+
+.progress-bar {
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--null-color), var(--luna-color));
+    transition: width 1s ease;
+}
+
+/* Info */
+.info-panel {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.info-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    
+    .null-clock,
+    .null-calendar,
+    .null-scales,
+    .null-moons {
+        grid-column: 1;
+    }
+    
+    .info-panel {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2em;
+    }
+    
+    .clock-display {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .main-time {
+        font-size: 2.5em;
+    }
+    
+    .moon-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .info-panel {
+        grid-template-columns: 1fr;
+    }
+}

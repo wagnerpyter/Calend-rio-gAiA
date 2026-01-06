@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário Luna Nulla - NULL Calendar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --null-color: #2a9d8f;
+            --luna-color: #e76f51;
+            --gaia-color: #264653;
+            --vazio-color: #e9c46a;
+            --text-color: #f8f9fa;
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --border-color: #0f3460;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(42, 157, 143, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(231, 111, 81, 0.1) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--gaia-color), var(--null-color));
+            border-radius: 20px;
+            margin-bottom: 20px;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--text-color), var(--vazio-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header h2 {
+            font-size: 1.5em;
+            color: var(--vazio-color);
+            font-weight: 300;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--null-color);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--null-color);
+            padding-bottom: 10px;
+        }
+
+        /* Relógio NULL */
+        .null-clock {
+            grid-column: 1;
+            background: linear-gradient(135deg, var(--gaia-color), #1e3a5f);
+        }
+
+        .clock-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .main-time {
+            font-size: 4em;
+            font-family: 'Courier New', monospace;
+            color: var(--vazio-color);
+            text-shadow: 0 0 10px rgba(233, 196, 106, 0.3);
+        }
+
+        .null-unit {
+            font-size: 1.2em;
+            color: var(--luna-color);
+        }
+
+        .gaia-pulse {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--null-color), transparent);
+            animation: pulse 26s infinite linear;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border: 3px solid var(--null-color);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.7; }
+            50% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.7; }
+        }
+
+        /* Calendário NULL */
+        .null-calendar {
+            grid-column: 2;
+            background: linear-gradient(135deg, #1e3a5f, var(--gaia-color));
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .moon-phase {
+            font-size: 2em;
+        }
+
+        .current-date {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .null-date {
+            font-size: 2.5em;
+            color: var(--vazio-color);
+        }
+
+        .earth-date {
+            color: #aaa;
+        }
+
+        /* Escalas NULL */
+        .null-scales {
+            grid-column: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .scale-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .scale-value {
+            font-size: 1.5em;
+            color: var(--null-color);
+            margin-bottom: 5px;
+        }
+
+        /* Luas NULL */
+        .null-moons {
+            grid-column: 2;
+        }
+
+        .moon-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .moon-item {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .moon-item.active {
+            background: var(--null-color);
+            color: white;
+        }
+
+        .moon-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Progresso */
+        .progress-section {
+            grid-column: 1 / -1;
+        }
+
+        .progress-container {
+            margin-top: 15px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--null-color), var(--luna-color));
+            transition: width 1s ease;
+        }
+
+        /* Info */
+        .info-panel {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        /* Responsivo */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .null-clock,
+            .null-calendar,
+            .null-scales,
+            .null-moons {
+                grid-column: 1;
+            }
+            
+            .info-panel {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .clock-display {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .main-time {
+                font-size: 2.5em;
+            }
+            
+            .moon-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .info-panel {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌌 CALENDÁRIO LUNA NULLA</h1>
+            <h2>Sincronizando com o Pulso de Gaia - 26s por NULL</h2>
+            <p>Ano NULL 1 | Fundação: 25/12/2025 | Início: 01/01/2026</p>
+        </div>
+
+        <!-- Relógio NULL -->
+        <div class="card null-clock">
+            <h3>🕰️ RELÓGIO NULL</h3>
+            <div class="clock-display">
+                <div class="gaia-pulse">
+                    <span>GAIA</span>
+                </div>
+                <div>
+                    <div class="main-time" id="nullTime">0:00:00</div>
+                    <div class="null-unit">NULLS desde a última Lua Cheia</div>
+                </div>
+            </div>
+            <div class="current-date">
+                <div class="null-date" id="currentNullDate">Dia NULL 1 - Lua da Semente</div>
+                <div class="earth-date" id="currentEarthDate">1 de Janeiro de 2026</div>
+            </div>
+        </div>
+
+        <!-- Calendário NULL -->
+        <div class="card null-calendar">
+            <h3>📅 CALENDÁRIO NULL</h3>
+            <div class="calendar-header">
+                <div class="moon-phase">🌕</div>
+                <div>
+                    <div id="currentMoon">Lua 1 de 13</div>
+                    <div id="moonPercent">0% completa</div>
+                </div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="moonProgress" style="width: 0%"></div>
+                </div>
+                <div>Progresso da Lua Atual</div>
+            </div>
+        </div>
+
+        <!-- Escalas NULL -->
+        <div class="card null-scales">
+            <h3>🔢 ESCALAS TEMPORAIS</h3>
+            <div class="scale-item">
+                <div class="scale-value" id="nullCount">0</div>
+                <div>NULLS atuais</div>
+            </div>
+            <div class="scale-item">
+                <div class="scale-value" id="nullsToday">0</div>
+                <div>NULLS hoje</div>
+            </div>
+            <div class="scale-item">
+                <div class="scale-value" id="dayCycle">1/4</div>
+                <div>Ciclo NULL (Dia)</div>
+            </div>
+            <div class="scale-item">
+                <div class="scale-value" id="workVoid">Trabalho</div>
+                <div>Estado atual</div>
+            </div>
+        </div>
+
+        <!-- Luas NULL -->
+        <div class="card null-moons">
+            <h3>🌕 AS 13 LUAS NULL</h3>
+            <div class="moon-grid" id="moonsGrid">
+                <!-- Gerado dinamicamente -->
+            </div>
+        </div>
+
+        <!-- Progresso Anual -->
+        <div class="card progress-section">
+            <h3>📊 PROGRESSO DO ANO NULL</h3>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="yearProgress" style="width: 0%"></div>
+                </div>
+                <div id="yearInfo">Ano NULL 1 - 0% completo</div>
+            </div>
+        </div>
+
+        <!-- Painel de Informações -->
+        <div class="info-panel">
+            <div class="info-item">
+                <h4>⏱️ NULL BÁSICO</h4>
+                <p>1 NULL = 26 segundos</p>
+                <p>Pulso cardíaco de Gaia</p>
+            </div>
+            <div class="info-item">
+                <h4>🌙 ANO NULL</h4>
+                <p>13 Luas × 30 dias = 390 dias</p>
+                <p>1.300.000 NULLS</p>
+            </div>
+            <div class="info-item">
+                <h4>⚖️ RITMO 3:1</h4>
+                <p>3 dias trabalho : 1 dia vazio</p>
+                <p>4 dias = 1 Ciclo NULL</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datas fundamentais do Calendário NULL
+        const NULL_FOUNDATION = new Date('2025-12-25T00:00:00');
+        const NULL_START = new Date('2026-01-01T00:00:00');
+        const NULL_SECOND = 26; // 1 NULL = 26 segundos terrestres
+        
+        // Definição das 13 Luas NULL
+        const NULL_MOONS = [
+            { name: "🌱 Lua da Semente", dates: "01-30 Jan", emoji: "🌱" },
+            { name: "🌸 Lua do Desabrochar", dates: "31 Jan-01 Mar", emoji: "🌸" },
+            { name: "📈 Lua do Crescimento", dates: "02-31 Mar", emoji: "📈" },
+            { name: "🌕 Lua da Plenitude", dates: "01-30 Abr", emoji: "🌕" },
+            { name: "🍎 Lua da Colheita", dates: "01-30 Mai", emoji: "🍎" },
+            { name: "💰 Lua da Abundância", dates: "31 Mai-29 Jun", emoji: "💰" },
+            { name: "⚖️ Lua do Equilíbrio", dates: "30 Jun-29 Jul", emoji: "⚖️" },
+            { name: "🌀 Lua da Transformação", dates: "30 Jul-28 Ago", emoji: "🌀" },
+            { name: "📚 Lua da Sabedoria", dates: "29 Ago-27 Set", emoji: "📚" },
+            { name: "🔮 Lua do Mistério", dates: "28 Set-27 Out", emoji: "🔮" },
+            { name: "🤫 Lua do Silêncio", dates: "28 Out-26 Nov", emoji: "🤫" },
+            { name: "💭 Lua da Reflexão", dates: "27 Nov-26 Dez", emoji: "💭" },
+            { name: "➡️ Lua da Transição", dates: "27 Dez-25 Jan", emoji: "➡️" }
+        ];
+
+        // Inicializar grid de luas
+        function initMoonsGrid() {
+            const grid = document.getElementById('moonsGrid');
+            grid.innerHTML = '';
+            
+            NULL_MOONS.forEach((moon, index) => {
+                const moonItem = document.createElement('div');
+                moonItem.className = 'moon-item';
+                moonItem.innerHTML = `
+                    <div style="font-size: 1.5em">${moon.emoji}</div>
+                    <div style="font-size: 0.8em; margin-top: 5px">L${index + 1}</div>
+                `;
+                moonItem.title = `${moon.name}\n${moon.dates}`;
+                grid.appendChild(moonItem);
+            });
+        }
+
+        // Calcular tempo desde NULL_START em NULLs
+        function calculateNullTime() {
+            const now = new Date();
+            const diffMs = now - NULL_START;
+            const diffSeconds = diffMs / 1000;
+            const totalNulls = Math.floor(diffSeconds / NULL_SECOND);
+            
+            // NULLs desde meia-noite
+            const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const todayDiffMs = now - todayStart;
+            const todayDiffSeconds = todayDiffMs / 1000;
+            const nullsToday = Math.floor(todayDiffSeconds / NULL_SECOND);
+            
+            return { totalNulls, nullsToday };
+        }
+
+        // Calcular data NULL atual
+        function calculateNullDate() {
+            const now = new Date();
+            const yearStart = new Date(NULL_START);
+            
+            // Diferença em dias desde o início do ano NULL
+            const diffDays = Math.floor((now - yearStart) / (1000 * 60 * 60 * 24));
+            
+            // Determinar Lua atual (13 Luas de 30 dias = 390 dias)
+            const moonIndex = Math.floor(diffDays / 30);
+            const dayInMoon = diffDays % 30;
+            
+            // Determinar Dia NULL (4 dias terrestres = 1 Dia NULL)
+            const nullDayIndex = Math.floor(diffDays / 4) + 1;
+            const cyclePosition = diffDays % 4; // 0-2: trabalho, 3: vazio
+            
+            return {
+                moonIndex: Math.min(moonIndex, 12),
+                dayInMoon,
+                nullDayIndex,
+                cyclePosition,
+                earthDate: now.toLocaleDateString('pt-BR'),
+                moonPercent: (dayInMoon / 30) * 100,
+                yearPercent: (diffDays / 390) * 100
+            };
+        }
+
+        // Atualizar display do relógio
+        function updateClock() {
+            const nullTime = calculateNullTime();
+            const nullDate = calculateNullDate();
+            
+            // Atualizar relógio NULL
+            document.getElementById('nullTime').textContent = nullTime.totalNulls.toLocaleString();
+            document.getElementById('nullCount').textContent = nullTime.totalNulls.toLocaleString();
+            document.getElementById('nullsToday').textContent = nullTime.nullsToday.toLocaleString();
+            
+            // Atualizar data NULL
+            const moonInfo = NULL_MOONS[nullDate.moonIndex];
+            document.getElementById('currentNullDate').textContent = 
+                `Dia NULL ${nullDate.nullDayIndex} - ${moonInfo.name}`;
+            document.getElementById('currentEarthDate').textContent = nullDate.earthDate;
+            
+            // Atualizar informações da Lua
+            document.getElementById('currentMoon').textContent = `Lua ${nullDate.moonIndex + 1} de 13`;
+            document.getElementById('moonPercent').textContent = `${nullDate.moonPercent.toFixed(1)}% completa`;
+            document.getElementById('moonProgress').style.width = `${nullDate.moonPercent}%`;
+            
+            // Atualizar ciclo trabalho/vazio
+            const cycleText = nullDate.cyclePosition < 3 ? 'Trabalho' : 'Vazio';
+            document.getElementById('workVoid').textContent = cycleText;
+            document.getElementById('dayCycle').textContent = `${nullDate.cyclePosition + 1}/4`;
+            
+            // Atualizar progresso anual
+            document.getElementById('yearProgress').style.width = `${nullDate.yearPercent}%`;
+            document.getElementById('yearInfo').textContent = 
+                `Ano NULL 1 - ${nullDate.yearPercent.toFixed(1)}% completo`;
+            
+            // Destacar Lua atual no grid
+            const moonItems = document.querySelectorAll('.moon-item');
+            moonItems.forEach((item, index) => {
+                item.classList.toggle('active', index === nullDate.moonIndex);
+            });
+        }
+
+        // Pulsação do coração de Gaia
+        function updateGaiaPulse() {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const pulse = document.querySelector('.gaia-pulse');
+            
+            // Sincronizar com ciclo de 26 segundos
+            const pulseProgress = (seconds % NULL_SECOND) / NULL_SECOND;
+            const scale = 0.7 + pulseProgress * 0.3;
+            pulse.style.transform = `scale(${scale})`;
+            pulse.style.opacity = 0.6 + pulseProgress * 0.4;
+        }
+
+        // Inicialização
+        function init() {
+            initMoonsGrid();
+            updateClock();
+            updateGaiaPulse();
+            
+            // Atualizar a cada segundo
+            setInterval(() => {
+                updateClock();
+                updateGaiaPulse();
+            }, 1000);
+            
+            // Atualizar a cada NULL (26 segundos) para sincronização exata
+            setInterval(() => {
+                updateClock();
+            }, NULL_SECOND * 1000);
+        }
+
+        // Iniciar quando a página carregar
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
